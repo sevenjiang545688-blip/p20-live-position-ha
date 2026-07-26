@@ -25,5 +25,5 @@ class P20LivePositionConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             )
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({vol.Required(key): float for key in CALIBRATION_KEYS}),
+            data_schema=vol.Schema({vol.Required(key): str for key in CALIBRATION_KEYS}),
         )
