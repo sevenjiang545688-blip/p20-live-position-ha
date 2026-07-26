@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "启用 P20 Pro 实时位置实验",
+        "description": "复用 Home Assistant 官方 Roborock 集成已经建立的连接，每 3 秒读取一次位置。六个映射系数只保存在你的 HA 本地。",
+        "data": {
+          "left_x": "left% 的 X 系数",
+          "left_y": "left% 的 Y 系数",
+          "left_offset": "left% 偏移",
+          "top_x": "top% 的 X 系数",
+          "top_y": "top% 的 Y 系数",
+          "top_offset": "top% 偏移"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "P20 Pro 实时位置实验已经配置。"
+    }
+  }
+}
