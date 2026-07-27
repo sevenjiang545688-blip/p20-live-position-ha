@@ -6,6 +6,15 @@ DOMAIN = "p20_live_position"
 ROBOROCK_DOMAIN = "roborock"
 TARGET_MODEL = "roborock.vacuum.a134"
 SCAN_INTERVAL = timedelta(seconds=3)
+VACUUM_ENTITY_ID = "vacuum.p20_pro"
+
+DOCK_ANCHOR = {
+    "lan_x": 512.24,
+    "lan_y": 521.94,
+    "angle": -92,
+    "left_percent": 31.9573,
+    "top_percent": 64.6566,
+}
 
 CONF_LEFT_X = "left_x"
 CONF_LEFT_Y = "left_y"

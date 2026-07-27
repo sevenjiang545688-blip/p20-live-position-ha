@@ -18,7 +18,13 @@ from homeassistant.helpers.update_coordinator import (
 )
 from homeassistant.util import dt as dt_util
 
-from .const import ROBOROCK_DOMAIN, SCAN_INTERVAL, TARGET_MODEL
+from .const import (
+    DOCK_ANCHOR,
+    ROBOROCK_DOMAIN,
+    SCAN_INTERVAL,
+    TARGET_MODEL,
+    VACUUM_ENTITY_ID,
+)
 from .protocol import decode_position, dynamic_data_params
 
 _LOGGER = logging.getLogger(__name__)
@@ -51,6 +57,13 @@ class P20PositionCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._calibration = calibration
 
     async def _async_update_data(self) -> dict[str, Any]:
+        vacuum_state = self.hass.states.get(VACUUM_ENTITY_ID)
+        if vacuum_state is not None and vacuum_state.state == "docked":
+            return {
+                **DOCK_ANCHOR,
+                "updated_at": dt_util.utcnow().isoformat(),
+                "connection": "dock_anchor",
+            }
         try:
             command = self._roborock_coordinator.properties_api.command
             diff = await command.send(RoborockCommand.GET_DYNAMIC_MAP_DIFF)
