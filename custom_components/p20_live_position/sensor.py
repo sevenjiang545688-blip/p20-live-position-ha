@@ -53,7 +53,7 @@ class P20PositionCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             name="P20 Pro live position",
             update_interval=SCAN_INTERVAL,
         )
-        self._roborock_coordinator = find_p20_coordinator(hass)
+        self._roborock_coordinator = None
         self._calibration = calibration
 
     async def _async_update_data(self) -> dict[str, Any]:
@@ -65,6 +65,8 @@ class P20PositionCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 "connection": "dock_anchor",
             }
         try:
+            if self._roborock_coordinator is None:
+                self._roborock_coordinator = find_p20_coordinator(self.hass)
             command = self._roborock_coordinator.properties_api.command
             diff = await command.send(RoborockCommand.GET_DYNAMIC_MAP_DIFF)
             if not isinstance(diff, dict):
