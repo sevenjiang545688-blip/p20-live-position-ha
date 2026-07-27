@@ -58,7 +58,11 @@ class P20PositionCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _async_update_data(self) -> dict[str, Any]:
         vacuum_state = self.hass.states.get(VACUUM_ENTITY_ID)
-        if vacuum_state is not None and vacuum_state.state == "docked":
+        if vacuum_state is None or vacuum_state.state in {
+            "docked",
+            "unknown",
+            "unavailable",
+        }:
             return {
                 **DOCK_ANCHOR,
                 "updated_at": dt_util.utcnow().isoformat(),
