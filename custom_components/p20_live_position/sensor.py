@@ -103,7 +103,13 @@ async def async_setup_entry(
     coordinator = P20PositionCoordinator(
         hass, {key: float(value) for key, value in entry.data.items()}
     )
-    await coordinator.async_config_entry_first_refresh()
+    coordinator.async_set_updated_data(
+        {
+            **DOCK_ANCHOR,
+            "updated_at": dt_util.utcnow().isoformat(),
+            "connection": "dock_anchor",
+        }
+    )
     async_add_entities([P20LivePositionSensor(coordinator)])
 
 
